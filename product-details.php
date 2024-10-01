@@ -1,5 +1,5 @@
 <?php
-require_once 'dbconnection.php';
+require_once 'cms/dbconnection.php';
 $id = $_GET['id'];
 $decrypted_id = openssl_decrypt(urldecode($id), 'AES-128-ECB', 'your_secret_key');
 $trendingGames = mysqli_query($conn, "SELECT game_content.id, game_content.name, game_content.discount_price,game_content.our_price, game_content.about_game, game_content.game_place, game_content.game_description, game_content.game_id, game_content.genre, game_content.multitags, game_content.image, game_category.category_name FROM game_content LEFT JOIN game_category ON game_content.category = game_category.id WHERE game_content.id = '".$decrypted_id."' OR game_content.id ='".$id."'");
@@ -56,45 +56,7 @@ https://templatemo.com/tm-589-lugx-gaming
   <!-- ***** Preloader End ***** -->
 
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="index.php" class="logo">
-                      <?php
-                      $results = mysqli_query($conn, "SELECT * FROM `logo`");
-                      $logo = mysqli_fetch_assoc($results);
-                      // print_r($logo);
-                      ?>
-                        <img src="upload/<?php echo $logo ['image']; ?> "style="width: 158px;">
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                    <?php $menusName = mysqli_query($conn, "SELECT * FROM `websitemenu`");
-                        while ($menuListing = mysqli_fetch_assoc($menusName)) {
-                            ?>
-                            <li><a href="<?php echo $menuListing['menu_url'] ?>" class=""><?php echo $menuListing['menu_name']; ?></a></li>
-                        <?php
-                            }
-                        ?>
-                      <!-- <li><a href="index.php">Home</a></li>
-                      <li><a href="shop.php">Our Shop</a></li>
-                      <li><a href="product-details.php" class="active">Product Details</a></li>
-                      <li><a href="contact.php">Contact Us</a></li>
-                      <li><a href="#">Sign In</a></li> -->
-                  </ul>   
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
-            </div>
-        </div>
-    </div>
-  </header>
+  <?php include('website_partials/navbar.php') ?>
   <!-- ***** Header Area End ***** -->
 
   <div class="page-heading header-text">

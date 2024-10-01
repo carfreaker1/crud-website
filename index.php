@@ -1,5 +1,5 @@
 <?php
-require_once 'dbconnection.php';
+require_once 'cms/dbconnection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,45 +40,7 @@ require_once 'dbconnection.php';
   <!-- ***** Preloader End ***** -->
 
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="index.php" class="logo">
-                      <?php
-                      $results = mysqli_query($conn, "SELECT * FROM `logo`");
-                      $logo = mysqli_fetch_assoc($results);
-                      // print_r($logo);
-                      ?>
-                        <img src="upload/<?php echo $logo ['image']; ?> "style="width: 158px;">
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                      <?php $menusName = mysqli_query($conn, "SELECT * FROM `websitemenu`");
-                        while ($menuListing = mysqli_fetch_assoc($menusName)) {
-                            ?>
-                            <li><a href="<?php echo $menuListing['menu_url'] ?>" class=""><?php echo $menuListing['menu_name']; ?></a></li>
-                        <?php
-                            }
-                        ?>
-                    </ul>   
-                  <!-- <li><a href="index.php" class="active">Home</a></li>
-                      <li><a href="shop.php">Our Shop</a></li>
-                      <li><a href="product-details.php">Product Details</a></li>
-                      <li><a href="contact.php">Contact Us</a></li>
-                      <li><a href="admin.php">Sign In</a></li> -->
-                    <a class="menu-trigger">
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
-            </div>
-        </div>
-    </div>
-  </header>
+  <?php include('website_partials/navbar.php') ?>
   <!-- ***** Header Area End ***** -->
 
   <div class="main-banner">
@@ -510,10 +472,9 @@ require_once 'dbconnection.php';
   <script src="assets/js/counter.js"></script>
   <script src="assets/js/custom.js"></script>
 
+  
   </body>
 </html>
-
-
 
 
 

@@ -1,5 +1,5 @@
 <?php
-require_once 'dbconnection.php';
+require_once 'cms/dbconnection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,35 +47,7 @@ https://templatemo.com/tm-589-lugx-gaming
   <!-- ***** Preloader End ***** -->
 
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="index.html" class="logo">
-                        <img src="assets/images/logo.png" alt="" style="width: 158px;">
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                    <?php $menusName = mysqli_query($conn, "SELECT * FROM `websitemenu`");
-                        while ($menuListing = mysqli_fetch_assoc($menusName)) {
-                            ?>
-                            <li><a href="<?php echo $menuListing['menu_url'] ?>" class=""><?php echo $menuListing['menu_name']; ?></a></li>
-                        <?php
-                            }
-                        ?>
-                  </ul>   
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
-            </div>
-        </div>
-    </div>
-  </header>
+  <?php include('website_partials/navbar.php') ?>
   <!-- ***** Header Area End ***** -->
 
   <div class="page-heading header-text">

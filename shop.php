@@ -1,5 +1,5 @@
 <?php
-require_once 'dbconnection.php';
+require_once 'cms/dbconnection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,40 +47,7 @@ https://templatemo.com/tm-589-lugx-gaming
   <!-- ***** Preloader End ***** -->
 
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="index.php" class="logo">
-                      <?php
-                      $results = mysqli_query($conn, "SELECT * FROM `logo`");
-                      $logo = mysqli_fetch_assoc($results);
-                      // print_r($logo);
-                      ?>
-                        <img src="upload/<?php echo $logo ['image']; ?> "style="width: 158px;">
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                    <?php $menusName = mysqli_query($conn, "SELECT * FROM `websitemenu`");
-                        while ($menuListing = mysqli_fetch_assoc($menusName)) {
-                            ?>
-                            <li><a href="<?php echo $menuListing['menu_url'] ?>" class=""><?php echo $menuListing['menu_name']; ?></a></li>
-                        <?php
-                            }
-                        ?>
-                  </ul>   
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
-            </div>
-        </div>
-    </div>
-  </header>
+  <?php include('website_partials/navbar.php') ?>
   <!-- ***** Header Area End ***** -->
 
   <div class="page-heading header-text">
@@ -115,14 +82,16 @@ https://templatemo.com/tm-589-lugx-gaming
                  $trendingGames = mysqli_query($conn, "SELECT game_content.id, game_content.name, game_content.our_price, game_content.game_place, game_content.genre,game_content.discount_price, game_content.image, game_category.category_name FROM game_content LEFT JOIN game_category ON game_content.category = game_category.id ORDER BY RAND();");
                  // print_r($trendingGames);
                  // die;
-                 while($games = mysqli_fetch_assoc($trendingGames)){  
-                    // print_r($games);
+                 while($games = mysqli_fetch_assoc($trendingGames)){
+                  $discount = (int) $games['discount_price'];
+                  $realPrice = (int) $games['our_price'];
+                  $discountedPrice = $discount * $realPrice/100;
         ?>
                     <div class="col-lg-3 col-md-6 align-self-center mb-30 trending-items col-md-6 <?php echo $games['game_place']; ?>">
                     <div class="item">
                       <div class="thumb">
                         <a href="product-details.php?id=<?php echo urlencode(openssl_encrypt($games['id'], 'AES-128-ECB', 'your_secret_key')); ?>"><img src="upload/<?php echo $games['image'];?>" alt=""></a>
-                        <span class="price"><em><?php echo $games['our_price'];?></em><?php echo $games['discount_price'];?></span>
+                        <span class="price"><em>$<?php echo $games['our_price'];?></em>$<?php echo $discountedPrice;?></span>
                       </div>
                       <div class="down-content">
                         <span class="category"><?php echo $games['category_name'];?></span>
